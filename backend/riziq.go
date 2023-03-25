@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -69,4 +70,14 @@ func InsertAbout(satu string, dua string) (InsertedID interface{}) {
 	about.IsiDua = dua
 
 	return InsertOneDoc("dbabout", "about", about)
+}
+
+func GetPelangganFromNama(nama string) (staf Pelanggan) {
+	pelanggan := MongoConnect("dbpelanggan").Collection("pelanggan")
+	filter := bson.M{"nama": nama}
+	err := pelanggan.FindOne(context.TODO(), filter).Decode(&staf)
+	if err != nil {
+		fmt.Printf("getKaryawanFromNama: %v\n", err)
+	}
+	return staf
 }

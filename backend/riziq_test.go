@@ -1,52 +1,77 @@
 package riziq
 
 import (
-	"fmt"
 	"testing"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// func TestInsertPelanggan(t *testing.T) {
-// 	nm := "Farhan Riziq"
-// 	alm := "bandung"
-// 	tlp := "081238765694"
-// 	em := "farhan@gmail.com"
-// 	hasil := InsertPelanggan(nm, alm, tlp, em)
-// 	fmt.Println(hasil)
+func TestInsertPelanggan(t *testing.T) {
+	dbname := "tagihan"
+	pelanggan := Pelanggan{
+		ID:        primitive.NewObjectID(),
+		Nama:      "Farhan Riziq",
+		Alamat:    "bandung",
+		NoTelepon: "081238765694",
+		Email:     "farhan@gmail.com",
+	}
+	insertedID := InsertPelanggan(dbname, pelanggan)
+	if insertedID == nil {
+		t.Error("Failed to insert user")
+	}
+}
 
-// }
+func TestInsertTagihan(t *testing.T) {
+	dbname := "tagihan"
+	tagihan := Tagihan{
+		ID:               primitive.NewObjectID(),
+		TanggalTagihan:   "08.01.2021",
+		TotalTagihan:     "$5000.00",
+		StatusPembayaran: "complete",
+	}
+	insertedID := InsertTagihan(dbname, tagihan)
+	if insertedID == nil {
+		t.Error("Failed to insert surat")
+	}
+}
 
-// func TestInsertTagihan(t *testing.T) {
-// 	tgh := "08.01.2021"
-// 	tth := "$5000.00"
-// 	sp := "complete"
-// 	hasil := InsertTagihan(tgh, tth, sp)
-// 	fmt.Println(hasil)
-// }
+func TestInsertPembayaran(t *testing.T) {
+	dbname := "tagihan"
+	pembayaran := Pembayaran{
+		ID:                primitive.NewObjectID(),
+		TanggalPembayaran: "05.01.2021",
+		JumlahPembayaran:  "$2500.00",
+		MetodePembayaran:  "transfer",
+	}
+	insertedID := InsertPembayaran(dbname, pembayaran)
+	if insertedID == nil {
+		t.Error("Failed to insert lokasi")
+	}
+}
 
-// func TestInsertPembayaran(t *testing.T) {
-// 	tby := "05.01.2021"
-// 	jby := "$2500.00"
-// 	mby := "transfer"
-// 	hasil := InsertPembayaran(tby, jby, mby)
-// 	fmt.Println(hasil)
-// }
+func TestInsertProduk(t *testing.T) {
+	dbname := "tagihan"
+	produk := Produk{
+		ID:          primitive.NewObjectID(),
+		NamaProduk:  "Spotify",
+		HargaProduk: "$5000.00",
+	}
+	insertedID := InsertProduk(dbname, produk)
+	if insertedID == nil {
+		t.Error("Failed to insert lokasi")
+	}
+}
 
-// func TestInsertProduk(t *testing.T) {
-// 	npr := "Spotify"
-// 	hpr := "$5000.00"
-// 	hasil := InsertProduk(npr, hpr)
-// 	fmt.Println(hasil)
-// }
-
-// func TestInsertAbout(t *testing.T) {
-// 	satu := "isi satu"
-// 	dua := "isi dua"
-// 	hasil := InsertAbout(satu, dua)
-// 	fmt.Println(hasil)
-// }
-
-func TestGetDataPelangganFromNama(t *testing.T) {
-	nama := "Farhan Riziq"
-	hasil := GetPelangganFromNama(nama) (staf Pelanggan)
-	fmt.Println(hasil)
+func TestInsertAbout(t *testing.T) {
+	dbname := "tagihan"
+	about := About{
+		ID:      primitive.NewObjectID(),
+		IsiSatu: "isi satu",
+		IsiDua:  "isi dua",
+		Image:   "tes",
+	}
+	insertedID := InsertAbout(dbname, about)
+	if insertedID == nil {
+		t.Error("Failed to insert lokasi")
+	}
 }
